@@ -5,7 +5,7 @@ import { useApollo } from "../lib/apolloClient";
 import { useStore } from "../lib/redux";
 import reducers from "../store/reducer";
 // import reducers from '@store'
-import "../styles/globals.css";
+import "../styles/globals.scss";
 
 export default function App({ Component, pageProps }) {
   const store = useStore(pageProps.initialReduxState, reducers);
