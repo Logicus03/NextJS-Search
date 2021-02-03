@@ -1,5 +1,10 @@
 import { useMemo } from "react";
-import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client";
+import {
+  ApolloClient,
+  HttpLink,
+  InMemoryCache,
+  NormalizedCacheObject,
+} from "@apollo/client";
 import { concatPagination } from "@apollo/client/utilities";
 import merge from "deepmerge";
 import isEqual from "lodash/isEqual";
@@ -7,7 +12,7 @@ import { env } from "process";
 
 export const APOLLO_STATE_PROP_NAME = "__APOLLO_STATE__";
 
-let apolloClient;
+let apolloClient: ApolloClient<any>;
 
 const createApolloClient = () => {
   return new ApolloClient({
@@ -28,7 +33,10 @@ const createApolloClient = () => {
   });
 };
 
-const getData = (initialState: any, existingCache: any) => {
+const getData = (
+  initialState: any,
+  existingCache: any
+): NormalizedCacheObject => {
   return merge(initialState, existingCache, {
     arrayMerge: (destinationArray: any[], sourceArray: any[]) => [
       ...sourceArray,
@@ -49,15 +57,14 @@ export const initializeApollo = (initialState = null) => {
 
     // Restore the cache with the merged data
     _apolloClient.cache.restore(data);
-
-    // For SSG and SSR always create a new Apollo Client
-    if (typeof window === "undefined") return _apolloClient;
-
-    // Create the Apollo Client once in the client
-    if (!apolloClient) apolloClient = _apolloClient;
-
-    return _apolloClient;
   }
+
+  // For SSG and SSR always create a new Apollo Client
+  if (typeof window === "undefined") return _apolloClient;
+
+  // Create the Apollo Client once in the client
+  if (!apolloClient) apolloClient = _apolloClient;
+  return _apolloClient;
 };
 
 export function addApolloState(client, pageProps) {
