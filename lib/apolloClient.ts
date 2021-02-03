@@ -73,7 +73,7 @@ export const initializeApollo = (initialState = null) => {
   return _apolloClient;
 };
 
-export function addApolloState(client, pageProps) {
+export function addApolloState(client: any, pageProps: any) {
   if (pageProps?.props) {
     pageProps.props[APOLLO_STATE_PROP_NAME] = client.cache.extract();
   }
@@ -81,7 +81,7 @@ export function addApolloState(client, pageProps) {
   return pageProps;
 }
 
-export function useApollo(pageProps) {
+export function useApollo(pageProps: any) {
   const state = pageProps[APOLLO_STATE_PROP_NAME];
   const store = useMemo(() => initializeApollo(state), [state]);
   return store;
