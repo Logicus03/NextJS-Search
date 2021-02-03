@@ -4,6 +4,7 @@ import {
   HttpLink,
   InMemoryCache,
   NormalizedCacheObject,
+  operationName,
 } from "@apollo/client";
 import { concatPagination } from "@apollo/client/utilities";
 import merge from "deepmerge";
@@ -17,9 +18,14 @@ let apolloClient: ApolloClient<any>;
 const createApolloClient = () => {
   return new ApolloClient({
     ssrMode: typeof window === "undefined",
+    // creating an HttpLink to connect ApolloClient with the GraphQL server
     link: new HttpLink({
-      uri: env.SERVER_URI, // Server URL (must be absolute)
-      credentials: env.SERVER_PASSWORD, // Additional fetch() options like `credentials` or `headers`
+      uri: "https://api.yelp.com/v3/graphql", // Server URL, now I'll be using Yelp
+      headers: {
+        Authorization: `Bearer ${env.YELP_API_KEY}`,
+        "Content-Type": "application/json",
+        "Accept-Language": "en-US",
+      },
     }),
     cache: new InMemoryCache({
       typePolicies: {
