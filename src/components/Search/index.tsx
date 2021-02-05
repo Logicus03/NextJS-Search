@@ -1,26 +1,26 @@
 import { useState, useEffect } from "react";
-import "./search.module.scss";
+import styles from "./search.module.scss";
 
-const Search = () => {
-  const [input, setInput] = useState("");
+const Search = ({ search: term = "", onSearch = console.log }) => {
+  const [input, setInput] = useState(term);
 
   useEffect(() => {
     search(input);
   }, [input]);
 
   const search = (term: string) => {
-    // e.preventDefault();
-    // setInput(e.target.value);
-    console.log(term);
+    onSearch(term);
   };
 
   return (
-    <form className="search">
-      <input
-        placeholder="What are you looking for?"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-      />
+    <form className={styles.search}>
+      <div className={styles.search__input}>
+        <input
+          placeholder="What are you looking for?"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+        />
+      </div>
     </form>
   );
 };
