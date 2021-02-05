@@ -1,37 +1,43 @@
-import Head from "next/head";
-import styles from "../styles/Home.module.scss";
-import { Header } from "../components/Header";
-import { Footer } from "../components/Footer";
-import { useState } from "react";
+import React, { useState } from "react";
 
-export default function Home() {
-  const [input, setInput] = useState("");
+import styles from "@styles/Home.module.scss";
+import Layout from "@containers/Layout";
+import Search from "@components/Search";
+import Location from "@components/Location";
 
-  const search = (e) => {
-    e.preventDefault();
+import useKeyPress from "@hooks/useKeyPress";
+import { useRouter } from "next/router";
 
-    console.log("You hit search", input);
-  };
+export default function Home(props) {
+  const router = useRouter();
+  const [search, setSearch] = useState("");
+  const [location, setLocation] = useState(null);
+  const [error, setError] = useState(false); // used to indicate user which fields are required and empty
+
+  useKeyPress("Enter", () => {
+    router.push({
+      pathname: "/result",
+      query: {
+        search,
+        location: { ...location },
+      },
+    });
+
+    // Validate if search is not empty, neither Location
+    // console.log(search, location)
+
+    // if( !!search && !!location ){
+    //   setError(false);
+    //   router.push('/result')
+    // }
+
+    // setError(true);
+  });
 
   return (
-    <div className={styles.container}>
-      <Header />
-
-      <main className={styles.main}>
-        <form className="search">
-          <input value={input} onChange={(e) => setInput(e.target.value)} />
-          <button
-            className="search__buttonsHidden"
-            type="submit"
-            onClick={search}
-            variant="outlined"
-          >
-            Google Search
-          </button>
-        </form>
-      </main>
-
-      <Footer />
-    </div>
+    <Layout className={styles.container}>
+      <Search onSearch={setSearch} />
+      <Location onChange={setLocation} />
+    </Layout>
   );
 }
