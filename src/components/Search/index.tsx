@@ -4,12 +4,14 @@ import styles from "./search.module.scss";
 
 const Search = ({ search: term = "", onSearch = console.log }) => {
   const [searchTerm, setSearchTerm] = useState(term);
-  const [location, setLocation] = useState("");
+  const [location, setLocation] = useState({ name: "" });
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(e);
+    // console.log(e);
     // fetchBusinessDetails();
+
+    onSearch({ search: searchTerm, location });
   };
 
   return (
@@ -27,8 +29,8 @@ const Search = ({ search: term = "", onSearch = console.log }) => {
         required
         className={styles.container__input}
         placeholder="Where? City, country, ..."
-        value={location}
-        onChange={(e) => setLocation(e.target.value)}
+        value={location.name}
+        onChange={(e) => setLocation(e)}
       />
 
       <button type="submit" className={styles.container__button}>

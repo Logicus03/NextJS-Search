@@ -17,8 +17,8 @@ const Location = ({
   return (
     <AlgoliaPlaces
       {...props}
-      placeholder
-      value
+      placeholder={placeholder}
+      defaultValue={value}
       options={{
         appId,
         apiKey,

@@ -121,14 +121,16 @@
   }
 }
 
+.background {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 .search {
   &__background {
     background-image: url("https://images.pexels.com/photos/2263510/pexels-photo-2263510.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500");
     backdrop-filter: blur(10px);
-
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
   }
 }
 
