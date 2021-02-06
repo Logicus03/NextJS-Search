@@ -11,7 +11,8 @@ import isEqual from "lodash/isEqual";
 
 export const APOLLO_STATE_PROP_NAME = "__APOLLO_STATE__";
 
-const token = "";
+const token =
+  "VFcT6l2zbbI6oAlyuQjembQgHttjgRnLXElDEFgw7mM8-WudbWehlF1HAB5AUOeqepTiDNJ9qvw2wGbvskVtx8eQRCfzMNB6P0GtvSIBj00sUGuHcpZ25y1fHzEXYHYx";
 
 let apolloClient: ApolloClient<any>;
 
@@ -29,18 +30,26 @@ const memoryCache = new InMemoryCache({
 });
 
 const createApolloClient = () => {
+  // return new ApolloClient({
+  //   cache: memoryCache,
+  //   headers: {
+  //     Authorization: `Bearer ${token}`,
+  //     "Access-Control-Allow-Origin": "*",
+  //     // 'Content-Type': 'application/graphql'
+  //     "Content-Type": "application/json",
+  //     "Accept-Language": "en-US",
+  //     "X-Requested-With": "XMLHttpRequest",
+  //   },
+  //   // https://cors-anywhere.herokuapp.com/
+  //   uri: "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/graphql",
+  // });
+
   return new ApolloClient({
-    cache: memoryCache,
+    cache: new InMemoryCache(),
     headers: {
       Authorization: `Bearer ${token}`,
-      "Access-Control-Allow-Origin": "*",
-      // 'Content-Type': 'application/graphql'
-      "Content-Type": "application/json",
-      "Accept-Language": "en-US",
-      "X-Requested-With": "XMLHttpRequest",
     },
-    // https://cors-anywhere.herokuapp.com/
-    uri: "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/graphql",
+    uri: "https://api.yelp.com/v3/graphql",
   });
 };
 

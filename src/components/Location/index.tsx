@@ -5,6 +5,7 @@ import AlgoliaPlaces from "algolia-places-react";
 const Location = ({
   placeholder = "Enter an address",
   onChange = console.log,
+  value = "",
   ...props
 }) => {
   const { location, error } = useCurrentLocation();
@@ -15,7 +16,9 @@ const Location = ({
 
   return (
     <AlgoliaPlaces
-      placeholder={placeholder}
+      {...props}
+      placeholder
+      value
       options={{
         appId,
         apiKey,

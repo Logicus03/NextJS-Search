@@ -4,14 +4,14 @@ import { Footer } from "@components/Footer";
 import Card from "@components/Card";
 import "./layout.module.scss";
 
-const Layout = ({ className, children, header = null }) => {
+const Layout = ({ className, children, header = null, footer = null }) => {
   return (
-    <div className={className}>
-      <Header>{header}</Header>
+    <div className={`${className}`}>
+      {header && <Header>{header}</Header>}
 
       <main className="main">{children}</main>
 
-      <Footer />
+      {footer && <Footer />}
     </div>
   );
 };

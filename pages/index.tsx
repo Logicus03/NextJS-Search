@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import styles from "@styles/Home.module.scss";
 import Layout from "@containers/Layout";
 import Search from "@components/Search";
-import Location from "@components/Location";
 
 import useKeyPress from "@hooks/useKeyPress";
 import { useRouter } from "next/router";
@@ -22,22 +21,11 @@ export default function Home(props) {
         location: { ...location },
       },
     });
-
-    // Validate if search is not empty, neither Location
-    // console.log(search, location)
-
-    // if( !!search && !!location ){
-    //   setError(false);
-    //   router.push('/result')
-    // }
-
-    // setError(true);
   });
 
   return (
-    <Layout className={styles.container}>
+    <Layout className={` ${styles.search__background} ${styles.container}`}>
       <Search onSearch={setSearch} />
-      <Location onChange={setLocation} />
     </Layout>
   );
 }
