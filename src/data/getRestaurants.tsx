@@ -32,6 +32,5 @@ export default function Search(
   });
   if (loading) return <p>Loading ...</p>;
 
-  console.log({ loading, error, data });
   return data?.search;
 }

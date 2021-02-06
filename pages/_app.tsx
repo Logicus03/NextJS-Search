@@ -4,10 +4,9 @@ import { Provider } from "react-redux";
 import { useApollo } from "@lib/apolloClient";
 import { useStore } from "@lib/redux";
 import reducers from "@store/reducer";
-// import reducers from '@store'
 import "@styles/globals.scss";
 
-export default function App({ Component, pageProps }) {
+function App({ Component, pageProps }) {
   const store = useStore(pageProps.initialReduxState, reducers);
   const apolloClient = useApollo(pageProps);
 
@@ -19,3 +18,5 @@ export default function App({ Component, pageProps }) {
     </Provider>
   );
 }
+
+export default App;

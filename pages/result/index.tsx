@@ -7,7 +7,7 @@ import Search from "@components/Search";
 import styles from "./results.module.scss";
 
 const Result = () => {
-  const router = useRouter();
+  // const router = useRouter();
   const result = GetRestaurants("tacos", "Santo Domingo");
   console.log(result);
 
