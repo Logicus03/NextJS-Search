@@ -8,20 +8,14 @@ const Location = ({
   value = "",
   ...props
 }) => {
-  const { location, error } = useCurrentLocation();
-  const [place, setPlace] = useState("");
-
-  const appId = "pl5IEYRXJIBG";
-  const apiKey = "b169db65e9d17841323631f13441bd0d";
-
   return (
     <AlgoliaPlaces
       {...props}
       placeholder={placeholder}
       defaultValue={value}
       options={{
-        appId,
-        apiKey,
+        appId: process.env.ALGOLIA_SEARCH_APPLICATION_ID,
+        apiKey: process.env.ALGOLIA_SEARCH_API_KEY,
       }}
       onChange={({ suggestion }) => onChange(suggestion)}
     />
