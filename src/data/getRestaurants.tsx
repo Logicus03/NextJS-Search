@@ -1,45 +1,49 @@
-// // import { gql, useQuery } from "@apollo/client";
+import { gql } from "graphql-request";
 
-// const GET_RESTAURANTS = gql`
-//   query getRestaurants(
-//     $term: String!
-//     $location: String!
-//     $limit: Int!
-//     $reviews: Int!
-//   ) {
-//     search(location: "NY", limit: 10) {
-//       total
-//       business {
-//         name
-//       }
-//     }
-//   }
-// `;
-
-// export default function Search(
-//   term: string,
-//   location: string,
-//   limit = 10,
-//   reviews = 10
-// ) {
-//   const { loading, error, data } = useQuery(GET_RESTAURANTS, {
-//     variables: {
-//       term,
-//       location,
-//       limit,
-//       reviews,
-//     },
-//   });
-//   if (loading) return <p>Loading ...</p>;
-
-//   return data?.search;
-// }
-
-export default function Search(
-  term: string,
-  location: string,
-  limit = 10,
-  reviews = 10
-) {
-  console.log("Hello!");
-}
+export const GET_RESTAURANTS = gql`
+  query getRestaurants(
+    $term: String!
+    $location: String!
+    $limit: Int!
+    $reviews: Int!
+  ) {
+    search(term: $term, location: $location, limit: $limit, reviews: $reviews) {
+      total
+      businesses {
+        id
+        photos
+        name
+        location {
+          display_address
+          formatted_address
+        }
+        image_url
+        review_count
+        rating
+        display_phone
+        price
+        # reviews( limit:$reviews ) {
+        #   id
+        #   rating
+        #   user {
+        #     id
+        #     image_url
+        #     name
+        #   }
+        #   text
+        #   time_created
+        # }
+        hours {
+          hours_type
+          is_open_now
+          open {
+            start
+            end
+            day
+          }
+        }
+        is_closed
+      }
+    }
+  }
+`;

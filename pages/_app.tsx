@@ -1,4 +1,4 @@
-import { Provider } from "react-redux";
+import { Provider as ReduxProvider } from "react-redux";
 
 import { useStore } from "@lib/redux";
 import reducers from "@store/reducer";
@@ -8,9 +8,9 @@ function App({ Component, pageProps }) {
   const store = useStore(pageProps.initialReduxState, reducers);
 
   return (
-    <Provider store={store}>
+    <ReduxProvider store={store}>
       <Component {...pageProps} />
-    </Provider>
+    </ReduxProvider>
   );
 }
 

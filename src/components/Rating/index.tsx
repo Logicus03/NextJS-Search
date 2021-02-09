@@ -1,10 +1,13 @@
 import React from "react";
 import style from "./rating.module.scss";
-const Rating = ({ rating }) => {
+const Rating = ({ rating, className = "", showRating = false }) => {
   return (
-    <div className={style.star}>
-      <span style={{ width: `${rating * 20}%` }}></span>
-    </div>
+    <>
+      {showRating && <span className={style.rating}> Rating: {rating} </span>}
+      <div className={`${style.star} ${className}`}>
+        <span style={{ width: `${rating * 20}%` }}></span>
+      </div>
+    </>
   );
 };
 

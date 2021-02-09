@@ -3,22 +3,35 @@ const { GraphQLServer } = require("graphql-yoga");
 const yelp = require("yelp-fusion");
 const client = yelp.client(process.env.YELP_API_KEY);
 
+// const data = require("./response.example.json");
+
 const typeDefs = `
     type Query {
-        search(location: String): [Business]
+        search( term: String!, location: String!, limit: Int!, reviews: Int!, offset: Int): Businesses
         getDetail(alias: String): Detail
         getReviews(alias: String): [Review]
     }
     
     type Business {
-        id: ID!
-        name: String
-        alias: String
-        rating: Float
-        review_count: Int
-        display_phone: String
-        image_url: String
-        location: Location
+      id: ID!
+      name: String
+      alias: String
+      rating: Float
+      is_closed: String
+      photos: [String]
+      hours:[Hour]
+      price: String
+      review_count: Int
+      display_phone: String
+      image_url: String
+      location: Location
+
+      is_claimed: Boolean
+    }
+
+    type Businesses {
+      total: Int!
+      businesses: [Business]
     }
 
     type Time {
@@ -51,6 +64,7 @@ const typeDefs = `
 
     type Location {
         display_address: [String!]
+        formatted_address: [String!]
     }
 
     type User {
@@ -71,9 +85,11 @@ const typeDefs = `
 
 const resolvers = {
   Query: {
-    search: async (_, { location }) => {
-      const resp = await client.search({ location, limit: 10 });
-      return resp.jsonBody.businesses;
+    search: async (_, { term, location, limit, reviews }) => {
+      const resp = await client.search({ term, location, limit, reviews });
+      // console.log(resp.jsonBody);
+      return resp.jsonBody;
+      // return data;
     },
     getDetail: async (_, { alias }) => {
       const resp = await client.business(alias);

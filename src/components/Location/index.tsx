@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import useCurrentLocation from "@lib/geoLocation";
 import AlgoliaPlaces from "algolia-places-react";
 

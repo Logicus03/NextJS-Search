@@ -1,24 +1,58 @@
-import React, { useState } from "react";
-import { useRouter } from "next/router";
-import GetRestaurants from "@data/getRestaurants";
+import React, { useEffect, useState } from "react";
 
 import Layout from "@containers/Layout";
 import Search from "@components/Search";
 import styles from "./results.module.scss";
+import { connect } from "react-redux";
 
-const Result = () => {
-  // const router = useRouter();
-  const result = GetRestaurants("tacos", "Santo Domingo");
-  console.log(result);
+import { searchRestaurants, setSearch } from "@store/actions/restaurant.action";
+import Card from "@components/Card";
+
+const Result = ({ searchRestaurants, setSearch, data, ...props }) => {
+  console.log(data);
+  const [businesses, setBusinesses] = useState([]);
+
+  const handleSearch = ({ search, location }) => {
+    setSearch(search, location);
+    searchRestaurants();
+  };
+
+  const handleInit = () => {
+    searchRestaurants();
+  };
+
+  useEffect(handleInit, [data.term]);
+  useEffect(() => setBusinesses(data?.result?.businesses || []), [
+    data.result?.businesses,
+  ]);
 
   return (
     <Layout
       className={`${styles.background} ${styles.container}`}
-      header={<Search onSearch={console.log} />}
+      header={
+        <Search
+          search={data.term}
+          location={data.location.name || data.location}
+          onSearch={handleSearch}
+        />
+      }
     >
-      <p>Halo~</p>
+      <div className="container mt-5">
+        <div className="row">
+          {businesses.map((business) => (
+            <Card business={business} key={business.id} />
+          ))}
+        </div>
+      </div>
     </Layout>
   );
 };
 
-export default Result;
+const mapStateToProps = (state: any) => ({
+  data: state.search,
+});
+
+export default connect(mapStateToProps, {
+  searchRestaurants,
+  setSearch,
+})(Result);

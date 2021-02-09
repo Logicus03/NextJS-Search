@@ -2,9 +2,13 @@ import Location from "@components/Location";
 import { useState, useEffect } from "react";
 import styles from "./search.module.scss";
 
-const Search = ({ search: term = "", onSearch = console.log }) => {
+const Search = ({
+  search: term = "",
+  location: _location = { name: "Santo Domingo" },
+  onSearch = console.log,
+}) => {
   const [searchTerm, setSearchTerm] = useState(term);
-  const [location, setLocation] = useState({ name: "" });
+  const [location, setLocation] = useState(_location);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

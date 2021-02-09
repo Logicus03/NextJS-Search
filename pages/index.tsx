@@ -6,40 +6,56 @@ import Search from "@components/Search";
 
 import useKeyPress from "@hooks/useKeyPress";
 import { useRouter } from "next/router";
+import { connect } from "react-redux";
 
-export default function Home(props) {
+import { searchRestaurants, setSearch } from "@store/actions/restaurant.action";
+
+function Home({ setSearch, data }) {
   const router = useRouter();
-  const [search, setSearch] = useState("");
-  const [location, setLocation] = useState({ name: "" });
-  const [error, setError] = useState(false); // used to indicate user which fields are required and empty
+
+  const [term, setTerm] = useState(data.term);
+  const [location, setLocation] = useState(data.location);
+
+  const handleSearch = ({ search, location }) => {
+    setTerm(search);
+    setLocation(location);
+
+    // update Store
+    setSearch(search, location);
+    searchRestaurants();
+    // searchRestaurants();
+  };
 
   const searchRestaurants = () => {
-    if (!location.name || !search) {
-      // TODO: Trigger a "No Papu, You cannot"
-      console.log("Nope");
-      return;
-    }
-
-    router.push({
-      pathname: "/result",
-      query: {
-        search,
-        location: location?.name,
-      },
-    });
+    if (term && location?.name)
+      router.push({
+        pathname: "/result",
+        // query: {
+        //   term: term,
+        //   location: location.name,
+        // },
+      });
   };
 
   useKeyPress("Enter", searchRestaurants);
-  useEffect(searchRestaurants, [search, location]);
+  useEffect(searchRestaurants, [term, location]);
 
   return (
     <Layout className={`${styles.background} ${styles.search__background}`}>
       <Search
-        onSearch={({ search, location }) => {
-          setLocation(location);
-          setSearch(search);
-        }}
+        search={data.term}
+        location={data.location.name}
+        onSearch={handleSearch}
       />
     </Layout>
   );
 }
+
+const mapStateToProps = (state: any) => ({
+  data: state.search,
+});
+
+export default connect(mapStateToProps, {
+  searchRestaurants,
+  setSearch,
+})(Home);

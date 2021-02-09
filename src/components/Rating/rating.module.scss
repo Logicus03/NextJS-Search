@@ -1,6 +1,6 @@
 // CSS/SVG Star Ratings
 
-$ratingSize: 450px;
+$ratingSize: 8em;
 // $starLocation = #{}
 
 .star {
@@ -25,7 +25,7 @@ $ratingSize: 450px;
 
   > span {
     display: block;
-    text-indent: -10000px;
+    // text-indent: -10000px;
     width: $ratingSize;
     height: ($ratingSize/5);
     position: absolute;
@@ -42,8 +42,15 @@ $ratingSize: 450px;
       left: 0;
       position: absolute;
       right: 0;
-      text-indent: 10000px;
-      top: 0;
+      // text-indent: 10000px;
+      // top: 0;
     }
+  }
+}
+
+.rating {
+  p {
+    font-size: 1rem;
+    font-weight: 500;
   }
 }
