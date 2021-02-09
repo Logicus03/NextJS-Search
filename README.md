@@ -44,9 +44,9 @@ Frontend development challenge.
 First, run the development server:
 
 ```bash
-npm run dev
+npm run development
 # or
-yarn dev
+yarn development
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
